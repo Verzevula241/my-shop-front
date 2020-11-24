@@ -1,25 +1,38 @@
 import logo from './logo.svg';
 import './App.css';
+import {connect} from "react-redux"
+import {grab} from './actions/clothesAction'
+import React, { useState, useEffect } from 'react';
+import Vitrina from './components/vitrina'
 
-function App() {
+
+
+
+function App(state) {
+
+    
+    useEffect(() => {
+      state.getVideos();
+    },[]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={()=><vitrina data = {state.data}/>}>sdfgldfkglfkdjgghl</button>
+      <Vitrina data = {state.data}/>
     </div>
   );
 }
 
-export default App;
+function mapStateToProps(state){
+  return{
+      // videos: state.clothes.clothes,
+      data: state.cloathesReducer.clothes
+  }
+}
+function mapDispatchToProps(dispatch){
+  return{
+      getVideos: ()=> {dispatch(grab())},
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(App);
