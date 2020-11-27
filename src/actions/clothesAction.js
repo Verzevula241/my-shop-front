@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-export function grab(query, page) {
+export function grab() {
 
     return  dispatch =>{
             axios({
@@ -10,14 +10,34 @@ export function grab(query, page) {
                 baseURL: 'http://localhost:8080/api/',
             }).then(res => {
 
-                dispatch(videoGrabSuccess(res.data.data))
+                dispatch(dataGrabSuccess(res.data.data))
             })
         }
 }
+export function grabItem(itemName){
+    return  dispatch =>{
+        const fetchData = async (name) =>{
+            const result = await axios({
+            url: `/${name}`,
+            baseURL: 'http://localhost:8080/api/item/',
+        })
 
-export function videoGrabSuccess(videos) {
+        dispatch(itemGrabSuccess(result.data.data))
+    
+    }
+    fetchData(itemName)
+    }
+}
+
+export function dataGrabSuccess(data) {
     return {
-        type: "VIDEO_GRAB_SUCCESS",
-        videos
+        type: "DATA_GRAB_SUCCESS",
+        data
+    }
+}
+export function itemGrabSuccess(data) {
+    return {
+        type: "ITEM_GRAB_SUCCESS",
+        data
     }
 }

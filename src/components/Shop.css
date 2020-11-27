@@ -1,0 +1,21 @@
+.column-medium {
+    margin: 0 37px;
+    flex-basis: calc(25% - 32px);
+    -webkit-flex-basis: calc(25% - 32px);
+}
+.container-prod{
+    display: flex;
+    margin: 0 auto;
+    width: 100%;
+}
+.pic-product{
+    height: 330px;
+    background-position: center; 
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.info-product{
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 20px 10px 0px;
+}

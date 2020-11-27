@@ -1,7 +1,7 @@
 const initialState = {
     loading: false,
     clothes: [],
-    dataClothes: [],
+    dataClothes: {},
     update: false
 }
 
@@ -13,11 +13,18 @@ export default function videoGrab(state=initialState,action){
                 ...state,loading: true
             }
         }
-        case "VIDEO_GRAB_SUCCESS":{
+        case "DATA_GRAB_SUCCESS":{
             return {
                 ...state,
                 loading: false,
-                clothes: [...action.videos],
+                clothes: [...action.data],
+            }
+        }
+        case "ITEM_GRAB_SUCCESS":{
+            return {
+                ...state,
+                loading: false,
+                dataClothes: action.data,
             }
         }
         default:

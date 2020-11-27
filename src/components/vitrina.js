@@ -1,6 +1,9 @@
 import {React} from 'react'
 import './Vitrina.css'
-import {NavLink,Route,Redirect} from 'react-router-dom'
+import ItemPage from './ItemPage'
+import {NavLink,Route} from 'react-router-dom'
+import {connect} from "react-redux"
+import {grabItem} from '../actions/clothesAction'
 
 
 function vitrina (state) {
@@ -12,12 +15,12 @@ function vitrina (state) {
                     
             state.data.slice(0, 3).map((item, index) => {
                     return  <div  key={index} className="column-small" style={{backgroundImage: `url(${item.items[0].imageUrl})`}}>
+                    <NavLink style={{ textDecoration: 'none' , color: 'black'}} to={{pathname:`/${item.routeName}`,state:{name:item.routeName}}}>
                     <button className="categories-button">
-                        <NavLink style={{ textDecoration: 'none' , color: 'black'}} to={`/${item.routeName}`}>
                             <span className='title-sale'>{item.title}</span>
                             <br/>SHOP NOW
+                    </button>        
                         </NavLink>
-                    </button>
                     </div>
                     }
                 )
@@ -28,23 +31,35 @@ function vitrina (state) {
                     state.data.slice(3,5).map((item, index) => {
 
                         return  <div  key={index} className="column-big" style={{backgroundImage: `url(${item.items[0].imageUrl})`}}>
-                        <button className="categories-button">
-                            <NavLink style={{ textDecoration: 'none' , color: 'black'}} to={`/${item.routeName}`}>
+                        
+                            <NavLink style={{ textDecoration: 'none' , color: 'black'}} to={{pathname:`/${item.routeName}`,state:{name:item.routeName}}}>
+                            <button className="categories-button" onClick={()=>state.getItem(item.routeName)} >
                                 <span className='title-sale'>{item.title}</span>
                                 <br/>SHOP NOW
+                            </button>
                             </NavLink>
-                        </button>
+                        
                         </div>
 
                     })
                 }
             
             </div>
-
         </div>
       );
 
 }
 
+function mapStateToProps(state){
+    return{
+        data: state.cloathesReducer.clothes,
+        items: state.cloathesReducer.dataClothes
+    }
+  }
+  function mapDispatchToProps(dispatch){
+    return{
+        getItem: route => {dispatch(grabItem(route))}
+    }
+  }
 
-export default vitrina 
+export default connect(mapStateToProps,mapDispatchToProps)(vitrina); 
