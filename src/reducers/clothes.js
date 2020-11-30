@@ -2,7 +2,8 @@ const initialState = {
     loading: false,
     clothes: [],
     dataClothes: {},
-    update: false
+    modalData: {},
+    modalToggle: false
 }
 
 // Reducer
@@ -25,6 +26,18 @@ export default function videoGrab(state=initialState,action){
                 ...state,
                 loading: false,
                 dataClothes: action.data,
+            }
+        }
+        case "MODAL_DATA_ADD":{
+            return {
+                ...state,
+                modalData: action.data,
+            }
+        }
+        case "MODAL_TOGGLE":{
+            return {
+                ...state,
+                modalToggle: !state.modalToggle,
             }
         }
         default:

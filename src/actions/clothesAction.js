@@ -28,6 +28,17 @@ export function grabItem(itemName){
     fetchData(itemName)
     }
 }
+export function modalData(data){
+    return{
+        type: "MODAL_DATA_ADD",
+        data
+    }
+}
+export function modalToggle(){
+    return{
+        type: "MODAL_TOGGLE"
+    }
+}
 
 export function dataGrabSuccess(data) {
     return {
