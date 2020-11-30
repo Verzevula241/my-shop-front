@@ -9,13 +9,19 @@ import {applyMiddleware, createStore} from "redux"
 import {Provider} from 'react-redux'
 import reportWebVitals from './reportWebVitals';
 import Combine from "./reducers/index";
+import {ping} from './middleware/cartUpdate'
 
 
-const store = createStore(Combine,applyMiddleware(thunk))
+const store = createStore(Combine,applyMiddleware(thunk,ping))
 
 store.subscribe(() => {
-    console.log('Subscribe', store.getState())
+    let str = store.getState()
+    console.log('Subscribe', str.cartReducer)
 })
+
+
+
+
 
 const app = (
     <BrowserRouter>
