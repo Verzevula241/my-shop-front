@@ -2,7 +2,8 @@ import {React} from 'react'
 // import './Modal.css'
 import './Modal.scss'
 import {connect} from "react-redux"
-import {modalToggle} from '../actions/clothesAction'
+import {modalToggle} from '../../actions/clothesAction'
+import {cartData,updateCart} from '../../actions/cartAction'
 import { LoremIpsum } from 'react-lorem-ipsum';
 
 function Modal (state) {
@@ -34,7 +35,7 @@ function Modal (state) {
               <div className="product-description">
             <LoremIpsum p={2} />
             </div>
-              <button>sfsefsd</button>
+              <button onClick={()=>{state.addToCart(state.data).then(()=>{state.updateCart()})}}>sfsefsd</button>
             </div>
             
           </div>
@@ -46,12 +47,15 @@ function Modal (state) {
 function mapStateToProps(state){
     return{
         data: state.cloathesReducer.modalData,
-        show: state.cloathesReducer.modalToggle
+        show: state.cloathesReducer.modalToggle,
+        cart: state.cartReducer.cart
     }
   }
   function mapDispatchToProps(dispatch){
     return{
         hide: ()=> {dispatch(modalToggle())},
+        addToCart: (item)=>{dispatch(cartData(item));return Promise.resolve();},
+        updateCart: ()=>{dispatch(updateCart())}
     }
   }
   

@@ -1,8 +1,8 @@
 import {React} from 'react'
 import './Shop.css'
-import {NavLink,Route} from 'react-router-dom'
+import {NavLink} from 'react-router-dom'
 import {connect} from "react-redux"
-import {grabItem,modalData,modalToggle} from '../actions/clothesAction'
+import {grabItem,modalData,modalToggle} from '../../actions/clothesAction'
 
 function Item(props){
     return <div className='container-prod'>

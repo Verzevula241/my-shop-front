@@ -2,7 +2,7 @@ import {React,useState, useEffect} from 'react'
 import './CategoryPage.css'
 import {connect} from "react-redux"
 import {useLocation} from 'react-router-dom'
-import {grabItem,modalData,modalToggle} from '../actions/clothesAction'
+import {grabItem,modalData,modalToggle} from '../../actions/clothesAction'
 import axios from 'axios';
  
 function ItemPage(state) {
@@ -12,7 +12,6 @@ function ItemPage(state) {
 
   useEffect(() => {
     
-      console.log(location)
     const fetchData = async (name) => {
       const result = await axios(
         `http://localhost:8080/api/item${name}`,
