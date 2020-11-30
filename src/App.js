@@ -5,8 +5,10 @@ import React, { useEffect } from 'react';
 import Vitrina from './components/Vitrina'
 import {NavLink,Route,Redirect, Switch} from 'react-router-dom'
 import CrownLogo from './img/crown.svg';
-import ItemPage from './components/ItemPage';
+import ItemPage from './components/CategoryPage';
 import Shop from './components/Shop'
+import Modal from './components/Modal'
+import { loremIpsum, name, surname, fullname, username } from 'react-lorem-ipsum';
 
 
 
@@ -31,9 +33,13 @@ function App(state) {
               <Switch>
               <Route path="/home" component={() =>  <Vitrina/>} />
               <Route path="/shop" component={() =>  <Shop/>} />
+              <Route path="/contacts" component={() =>  <p>Контакты</p>} />
               <Route path="/:name" component={() => <ItemPage page = ':name'/>} />
               <Redirect from='/' to='/home'/>
               </Switch>
+              <Modal/>
+
+
     </div>
   );
 }
