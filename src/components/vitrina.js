@@ -1,6 +1,6 @@
 import {React} from 'react'
 import './Vitrina.css'
-import ItemPage from './ItemPage'
+import ItemPage from './CategoryPage'
 import {NavLink,Route} from 'react-router-dom'
 import {connect} from "react-redux"
 import {grabItem} from '../actions/clothesAction'

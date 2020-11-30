@@ -19,3 +19,12 @@
     justify-content: space-between;
     margin: 10px 20px 10px 0px;
 }
+.art{
+    display: flex;
+    display: -webkit-flex;
+    flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    padding: 16px;
+    max-width: 960px;
+    margin: 0 auto;
+}

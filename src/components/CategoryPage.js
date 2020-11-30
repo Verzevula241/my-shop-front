@@ -1,8 +1,8 @@
 import {React,useState, useEffect} from 'react'
-import './ItemPage.css'
+import './CategoryPage.css'
 import {connect} from "react-redux"
 import {useLocation} from 'react-router-dom'
-import {grabItem} from '../actions/clothesAction'
+import {grabItem,modalData,modalToggle} from '../actions/clothesAction'
 import axios from 'axios';
  
 function ItemPage(state) {
@@ -26,16 +26,18 @@ function ItemPage(state) {
  
   return (
 <article>
+    <div>
     <div className="container-item">
       {data.items.map((item,index) => (
-        <div className='column-medium' key = {index}>
-        <div className="pic-product" style={{backgroundImage: `url(${item.imageUrl})`}}/>
+        <div className='column-m' key = {index}>
+        <div className="pic-product" style={{backgroundImage: `url(${item.imageUrl})`}} onClick={()=>{state.setModal(item);state.modalTog()}}/>
             <div className="info-product" key={index}>
                 <span>{item.name}</span>
                 <span>{item.price}</span>
             </div>
         </div>
       ))}</div>
+      </div>
 </article>
   );
 }
@@ -48,7 +50,9 @@ function mapStateToProps(state){
   }
 function mapDispatchToProps(dispatch){
 return{
-    getItem: route => {dispatch(grabItem(route))}
+    getItem: route => {dispatch(grabItem(route))},
+    setModal: data => {dispatch(modalData(data))},
+    modalTog: ()=> {dispatch(modalToggle())},
 }
 }
   export default connect(mapStateToProps,mapDispatchToProps)(ItemPage); 

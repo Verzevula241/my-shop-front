@@ -9,15 +9,21 @@
     justify-content: space-between;
     margin: 10px 20px 10px 0px;
 }
-.column-medium{
-    margin: 0 37px;
+.column-m{
+    min-height: 355px;
     flex-basis: calc(25% - 32px);
     -webkit-flex-basis: calc(25% - 32px);
+    background: #fff;
+    margin: 16px;
+    width: 200px;
+    border-radius: 2px;
 }
 .container-item{
     display: flex;
+    display: -webkit-flex;
     flex-wrap: wrap;
+    -webkit-flex-wrap: wrap;
+    padding: 16px;
+    max-width: 960px;
     margin: 0 auto;
-    width: 100%;
-    justify-content: center;
 }

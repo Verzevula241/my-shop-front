@@ -26,6 +26,7 @@ header{
     margin: 0 auto;
     table-layout: fixed;
     border-spacing: 16px 0px;
+    max-width: 960px;
     width: 100%;
 }
 .column-small {
