@@ -34,6 +34,11 @@ export default function videoGrab(state=initialState,action){
                 modalData: action.data,
             }
         }
+        case "LOGIN":{
+            return {
+                ...state
+            }
+        }
         case "MODAL_TOGGLE":{
             return {
                 ...state,

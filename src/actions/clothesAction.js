@@ -1,4 +1,5 @@
 import axios from "axios";
+var querystring = require('querystring');
 
 
 
@@ -46,9 +47,31 @@ export function dataGrabSuccess(data) {
         data
     }
 }
+export function sighin(email,password) {
+    return {
+        type: "DATA_GRAB_SUCCESS",
+        email: email,
+        password: password
+    }
+}
 export function itemGrabSuccess(data) {
     return {
         type: "ITEM_GRAB_SUCCESS",
         data
+    }
+}
+export function login(email,password){
+    
+    axios.post('http://localhost:8081/login', querystring.stringify({
+      email: email,
+      password: password,
+    }), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+        
+      }
+    })
+    return {
+        type: "LOGIN",
     }
 }

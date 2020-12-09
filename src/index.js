@@ -14,7 +14,8 @@ import {ping} from './middleware/cartUpdate'
 
 const store = createStore(Combine,applyMiddleware(thunk,ping))
 
-store.subscribe(() => {
+store.subscribe((action) => {
+    // store.dispatch({ type: 'UPDATE_CART' })
     let str = store.getState()
     console.log('Subscribe', str.cartReducer)
 })
