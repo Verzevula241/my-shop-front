@@ -1,4 +1,5 @@
 import AuthService from "../services/auth.service";
+import Orderservice from "../services/order.service"
 
 export const register = (username, email, password) => (dispatch) => {
   return AuthService.register(username, email, password).then(
@@ -75,3 +76,25 @@ export const logout = () => (dispatch) => {
     type: "LOGOUT",
   });
 };
+
+export const setMessage = (message) => ({
+  type: "SET_MESSAGE",
+  payload: message,
+});
+
+export const clearMessage = () => ({
+  type: "CLEAR_MESSAGE",
+});
+
+// export const getOrder = (id,token) => (dispatch) =>{
+//     return Orderservice.order(id,token).then(
+//       (data) => {
+//         dispatch({
+//           type: "ORDER_SUCCESS",
+//           payload: { user: data },
+//         });
+  
+//         return Promise.resolve();
+//       });
+        
+// };

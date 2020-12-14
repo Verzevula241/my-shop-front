@@ -35,7 +35,7 @@ function Modal (state) {
               <div className="product-description">
             <LoremIpsum p={2} />
             </div>
-              <button onClick={()=>{state.addToCart(state.data).then(()=>{state.updateCart()})}}>sfsefsd</button>
+              <button onClick={()=>{state.addToCart(state.data).then(()=>{state.updateCart()})}}>BUY</button>
             </div>
             
           </div>

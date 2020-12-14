@@ -17,7 +17,7 @@ const store = createStore(Combine,applyMiddleware(thunk,ping))
 store.subscribe((action) => {
     // store.dispatch({ type: 'UPDATE_CART' })
     let str = store.getState()
-    console.log('Subscribe', str.cartReducer)
+    console.log('Subscribe', str)
 })
 
 
@@ -32,9 +32,9 @@ const app = (
 
 ReactDOM.render(
     <Provider store={store}>
-      <React.StrictMode>
+      <React.Fragment>
           {app}
-      </React.StrictMode>
+      </React.Fragment>
     </Provider>,
   document.getElementById('root')
 );

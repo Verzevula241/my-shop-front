@@ -18,9 +18,9 @@ const add = (store) => {
 }
 
 
-const addOrder = (store,username) => {
+const addOrder = (store,id) => {
   axios.post('http://localhost:8080/api/order/add', querystring.stringify({
-    username: username,
+    id: id,
     data: JSON.stringify(store)
   }), {
     headers: {
@@ -96,9 +96,10 @@ export const ping = (store) => (next) => (action) => {
       )
     }
     case "CART_TO_ORDER": {
-      const cart_id = localStorage.getItem('key');
+      const cart_id = JSON.parse(localStorage.getItem('user'));
+      const user_id = cart_id === null?  undefined :cart_id.id
       const curStore = store.getState()
-      addOrder(curStore.cartReducer.cart,cart_id)
+      addOrder(curStore.cartReducer,user_id)
       next(action)
       return(
         store.dispatch({type: "UPDATE_CART"}) 

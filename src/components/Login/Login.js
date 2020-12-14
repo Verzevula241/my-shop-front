@@ -1,97 +1,127 @@
-// import React, { useState } from "react";
-// import "./Login.css";
-// import { connect } from "react-redux"
-// import {login} from '../../actions/clothesAction'
+import React, { useState, useRef } from "react";
+import { useDispatch, connect } from "react-redux";
+import { NavLink, Redirect } from 'react-router-dom';
+import './Login.scss'
+import Form from "react-validation/build/form";
+import Input from "react-validation/build/input";
+import CheckButton from "react-validation/build/button";
 
+import { login } from "../../actions/userAction";
 
-// function Login(state) {
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
+const required = (value) => {
+  if (!value) {
+    return (
+      <div className="alert alert-danger" role="alert">
+        This field is required!
+      </div>
+    );
+  }
+};
 
-//   function validateForm() {
-//     return email.length > 0 && password.length > 0;
-//   }
+const Login = (props) => {
+  const form = useRef();
+  const checkBtn = useRef();
 
-//   // const sighin = (email,password) => {
-//   //   axios.post('http://localhost:8081/login', querystring.stringify({
-//   //     email: email,
-//   //     password: password,
-//   //   }), {
-//   //     headers: {
-//   //       "Content-Type": "application/x-www-form-urlencoded"
-        
-//   //     }
-//   //   }).then(function (response) {
-//   //    localStorage.setItem('id',response.data.id)
-//   //    localStorage.setItem('username',response.data.username)
-//   //    localStorage.setItem('email',response.data.email)
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
-//   //   });
-//   // }
+  const isLoggedIn  = props.isLoggedIn
+  const message  = props.message;
 
-//   return (<div className='body-login'>
-// <div className="container-sighin">
-// 	<div className="">
-// 		<form className='form-sighin'>
-// 			<h1>Sign in</h1>
-// 			<input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-// 			<input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
-// 			<button className='buttonSighin' disabled={!validateForm()} onClick={()=>{state.login(email,password)}}>Sign In</button>
-// 		</form>
-// 	</div>
-// </div>
+  const dispatch = useDispatch();
 
-//   </div>);
-// }
+  const onChangeUsername = (e) => {
+    const username = e.target.value;
+    setUsername(username);
+  };
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     login: (email,password) => { dispatch(login(email,password)) }
-//   }
-// }
-// export default connect(null,mapDispatchToProps)(Login);
+  const onChangePassword = (e) => {
+    const password = e.target.value;
+    setPassword(password);
+  };
 
-import React ,{useState} from 'react';
-import { connect } from "react-redux"
-import {login} from '../../actions/clothesAction'
-import "./Login.css";
+  const handleLogin = (e) => {
+    e.preventDefault();
 
-import axios from "axios"
-var querystring = require('querystring');
+    setLoading(true);
 
-const Login = (state) => {
-  const [email, setEmail] = useState("react@test.com");
-  const [password, setPassword] = useState("1234567");
+    form.current.validateAll();
 
+    if (checkBtn.current.context._errors.length === 0) {
+      dispatch(login(username, password))
+        .then(() => {
+          props.history.push("/profile");
+          window.location.reload();
+        })
+        .catch(() => {
+          setLoading(false);
+        });
+    } else {
+      setLoading(false);
+    }
+  };
 
-    const sighin = async(email,password) => {
-    axios.post('http://localhost:8081/login', querystring.stringify({
-      email: email,
-      password: password,
-    }), {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-        
-      }
-    }).then(function (response) {
-     localStorage.setItem('id',response.data.id)
-     localStorage.setItem('username',response.data.username)
-     localStorage.setItem('email',response.data.email)
-
-    });
+  if (isLoggedIn) {
+    return <Redirect to="/profile" />;
   }
 
-  return (<>
-  <input type="email" placeholder="Email"/>
-  <input type="password" placeholder="Password"/>
-  <button className='buttonSighin' onClick={()=>{sighin(email,password)}}>Sign In</button>
-  </>);
-}
+  return (
+    <div >
+      <div className='form'>
+        <Form onSubmit={handleLogin} ref={form}>
+          <div >
+            <Input
+              type="text"
+              name="username"
+              value={username}
+              onChange={onChangeUsername}
+              validations={[required]}
+              placeholder="Email"
+            />
+          </div>
 
-function mapDispatchToProps(dispatch) {
-  return {
-    login: (email,password) => { dispatch(login(email,password));return Promise.resolve(); }
+          <div >
+            <Input
+              type="password"
+ 
+              name="password"
+              value={password}
+              onChange={onChangePassword}
+              validations={[required]}
+              placeholder="Password"
+            />
+          </div>
+
+          <div>
+            <button  disabled={loading}>
+              {loading && (
+                <span></span>
+              )}
+              <span>Login</span>
+            </button>
+          </div>
+          <p class="message">Not registered? <NavLink to="/registration">Create an account</NavLink></p>
+
+          {message && (
+            <div>
+              <div  role="alert">
+                {message}
+              </div>
+            </div>
+          )}
+          <CheckButton style={{ display: "none" }} ref={checkBtn} />
+        </Form>
+      </div>
+    </div>
+  );
+};
+
+function mapStateToProps(state) {
+    return {
+        isLoggedIn: state.userReducer.isLoggedIn,
+        message: state.messageReducer.message
+    }
   }
-}
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps)(Login);
